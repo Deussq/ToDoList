@@ -16,9 +16,11 @@ button.addEventListener("click", function () {
     const deleteBtn = document.createElement("button")
     deleteBtn.textContent = "❌"
 
-    deleteBtn.addEventListener("click", function () {
-        li.remove()
-    })
+   deleteBtn.addEventListener("click", function (event) {
+    event.stopPropagation()
+    li.remove()
+    updateTaskCount()
+})
 
     li.addEventListener("click", function () {
         li.classList.toggle("done")
@@ -26,11 +28,13 @@ button.addEventListener("click", function () {
 
     li.appendChild(deleteBtn)
     list.appendChild(li)
+    updateTaskCount()
     input.value = ""
 })
 
 deleteAllBtn.addEventListener("click", function () {
     list.innerHTML = ""
+    updateTaskCount()
 })
 
 
@@ -38,7 +42,11 @@ input.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         button.click()
     }
-
-    input.value
-    input.focus()
 })
+
+
+const totalTasks = document.getElementById("totalTasks")
+
+function updateTaskCount() {
+    totalTasks.textContent = `Total Tasks: ${list.children.length}`
+}
