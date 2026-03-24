@@ -13,14 +13,18 @@ button.addEventListener("click", function () {
     const li = document.createElement("li")
     li.textContent = text
 
+
+
     const deleteBtn = document.createElement("button")
     deleteBtn.textContent = "❌"
 
-   deleteBtn.addEventListener("click", function (event) {
-    event.stopPropagation()
-    li.remove()
-    updateTaskCount()
-})
+    deleteBtn.addEventListener("click", function (event) {
+        event.stopPropagation()
+        li.remove()
+        updateTaskCount()
+    })
+
+
 
     li.addEventListener("click", function () {
         li.classList.toggle("done")
@@ -31,6 +35,7 @@ button.addEventListener("click", function () {
     updateTaskCount()
     input.value = ""
 })
+
 
 deleteAllBtn.addEventListener("click", function () {
     list.innerHTML = ""
@@ -45,8 +50,29 @@ input.addEventListener("keydown", function (event) {
 })
 
 
+
 const totalTasks = document.getElementById("totalTasks")
 
 function updateTaskCount() {
     totalTasks.textContent = `Total Tasks: ${list.children.length}`
 }
+
+
+
+const search = document.getElementById("search")
+
+search.addEventListener("input", function () {
+    const searchText = search.value.toLowerCase()
+
+    const tasks = list.children 
+
+    for (let task of tasks) {
+        const text = task.textContent.toLowerCase()
+
+        if (text.includes(searchText)) {
+            task.style.display = "flex"
+        } else {
+            task.style.display = "none"
+        }
+    }
+})
