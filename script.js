@@ -22,17 +22,20 @@ button.addEventListener("click", function () {
         event.stopPropagation()
         li.remove()
         updateTaskCount()
+        saveTasks()
     })
 
 
 
     li.addEventListener("click", function () {
         li.classList.toggle("done")
+        saveTasks()
     })
 
     li.appendChild(deleteBtn)
     list.appendChild(li)
     updateTaskCount()
+    saveTasks()
     input.value = ""
 })
 
@@ -40,6 +43,7 @@ button.addEventListener("click", function () {
 deleteAllBtn.addEventListener("click", function () {
     list.innerHTML = ""
     updateTaskCount()
+    saveTasks()
 })
 
 
@@ -76,3 +80,63 @@ search.addEventListener("input", function () {
         }
     }
 })
+
+
+
+
+
+function saveTasks() {
+    const tasks = []
+
+    const items = list.children
+
+    for (let item of items) {
+        tasks.push({
+            text: item.textContent.replace("❌", "").trim(),
+            done: item.classList.contains("done")
+        })
+    }
+
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+}
+
+
+
+function loadTasks() {
+    const saved = localStorage.getItem("tasks")
+
+    if (!saved) return
+
+    const tasks = JSON.parse(saved)
+
+    tasks.forEach(task => {
+        const li = document.createElement("li")
+        li.textContent = task.text
+
+        if (task.done) {
+            li.classList.add("done")
+        }
+
+        const deleteBtn = document.createElement("button")
+        deleteBtn.textContent = "❌"
+
+        deleteBtn.addEventListener("click", function (event) {
+            event.stopPropagation()
+            li.remove()
+            saveTasks()
+            updateTaskCount()
+        })
+
+        li.addEventListener("click", function () {
+            li.classList.toggle("done")
+            saveTasks()
+        })
+
+        li.appendChild(deleteBtn)
+        list.appendChild(li)
+    })
+
+    updateTaskCount()
+}
+
+loadTasks()
