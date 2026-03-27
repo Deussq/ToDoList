@@ -6,14 +6,15 @@ const list = document.getElementById("list")
 
 
 
-button.addEventListener("click", function () {
-    const text = input.value.trim()
-    if (text === "") return
-
+function createTask(text, done = false) {
     const li = document.createElement("li")
-    li.textContent = text
 
+    const span = document.createElement("span")
+    span.textContent = text
 
+    if (done) {
+        li.classList.add("done")
+    }
 
     const deleteBtn = document.createElement("button")
     deleteBtn.textContent = "❌"
@@ -25,16 +26,35 @@ button.addEventListener("click", function () {
         saveTasks()
     })
 
-
-
     li.addEventListener("click", function () {
         li.classList.toggle("done")
         saveTasks()
     })
 
+    li.addEventListener("dblclick", function () {
+        const newText = prompt("Edit task:", span.textContent)
+
+        if (!newText) return
+
+        span.textContent = newText
+        saveTasks()
+    })
+
+    li.appendChild(span)
     li.appendChild(deleteBtn)
     list.appendChild(li)
+
     updateTaskCount()
+}
+
+
+
+
+button.addEventListener("click", function () {
+    const text = input.value.trim()
+    if (text === "") return
+
+    createTask(text)
     saveTasks()
     input.value = ""
 })
@@ -60,6 +80,8 @@ const totalTasks = document.getElementById("totalTasks")
 function updateTaskCount() {
     totalTasks.textContent = `Total Tasks: ${list.children.length}`
 }
+
+
 
 
 
@@ -109,34 +131,13 @@ function loadTasks() {
 
     const tasks = JSON.parse(saved)
 
-    tasks.forEach(task => {
-        const li = document.createElement("li")
-        li.textContent = task.text
-
-        if (task.done) {
-            li.classList.add("done")
-        }
-
-        const deleteBtn = document.createElement("button")
-        deleteBtn.textContent = "❌"
-
-        deleteBtn.addEventListener("click", function (event) {
-            event.stopPropagation()
-            li.remove()
-            saveTasks()
-            updateTaskCount()
-        })
-
-        li.addEventListener("click", function () {
-            li.classList.toggle("done")
-            saveTasks()
-        })
-
-        li.appendChild(deleteBtn)
-        list.appendChild(li)
-    })
+   tasks.forEach(task => {
+    createTask(task.text, task.done)
+})
 
     updateTaskCount()
 }
+
+
 
 loadTasks()

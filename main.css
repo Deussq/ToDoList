@@ -1,23 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
 
-
-
 :root {
-    --color-white: #FFFFFF;
+    --color-white: #ffffff;
     --color-black: #000000;
     --color-gray: #757575;
+    --color-light-gray: #f5f5f5;
+    --color-dark: #111111;  /* основной темный цвет */
+    --color-dark-hover: #555555; /* темный при наведении */
+    --color-red: #ff0000;
+    --color-done: #888888;
 }
-
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-       font-family: 'inter', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
-    background-color: var(--color-white);
+    background: var(--color-white);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -25,52 +27,45 @@ body {
     padding-top: 50px;
 }
 
-
-
-
-
-
 .todo-app {
-    background-color: var(--color-white);
+    background: var(--color-white);
     padding: 30px 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     width: 350px;
 }
 
 .todo-app h1 {
     text-align: center;
-    color: #111;
     margin-bottom: 20px;
     font-size: 24px;
-    letter-spacing: 1px;
 }
 
-/* --- Инпут и кнопки --- */
 .todo-input {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.todo-input input {
-    flex: 1;
+.todo-input input,
+.search-input input {
+    width: 100%;
     padding: 10px 12px;
-    border: 2px solid #111;
+    border: 2px solid var(--color-dark);
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     outline: none;
     transition: 0.2s;
 }
 
-.todo-input input:focus {
-    border-color: #555;
+.todo-input input:focus,
+.search-input input:focus {
+    border-color: var(--color-dark-hover);
 }
 
-/* --- Кнопки --- */
 .todo-input button {
     padding: 10px 15px;
-    background-color: #111;
+    background: var(--color-dark);
     color: var(--color-white);
     border: none;
     border-radius: 8px;
@@ -79,45 +74,12 @@ body {
     transition: 0.2s;
 }
 
-
 .todo-input button:hover {
-    background-color: #555;
+    background: var(--color-dark-hover);
 }
-
 
 .search-input {
     margin-bottom: 15px;
-}
-
-.search-input input {
-    width: 100%;
-    padding: 3px 12px;
-    border: 2px solid #111;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    transition: 0.2s;
-}
-
-.search-input input:focus {
-    border-color: #555;
-}
-
-
-
-
-
-
-
-.task-list button {
-    background-color: var(--color-white);
-    color: var(--color-black);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-
 }
 
 .task-list {
@@ -126,31 +88,43 @@ body {
     margin: 15px 0;
 }
 
-
-
-
-
-
-
-
+.task-list button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
 
 .todo-list {
     list-style: none;
     margin-top: 20px;
-    padding: 0;
 }
 
 .todo-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--color-white);
+    background: var(--color-white);
     margin-bottom: 10px;
     padding: 10px 15px;
     border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
     transition: 0.2s;
+}
+
+.todo-list li:hover {
+    background: var(--color-light-gray);
+}
+
+.todo-app li button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.todo-app li button:hover {
+    color: var(--color-red);
 }
 
 #list {
@@ -158,52 +132,21 @@ body {
     overflow-y: auto;
 }
 
-/* Scrollbar */
 #list::-webkit-scrollbar {
     width: 6px;
 }
 
-#list::-webkit-scrollbar-track {
-    background: transparent;
-}
-
 #list::-webkit-scrollbar-thumb {
-    background: #111;
+    background: var(--color-dark);
     border-radius: 10px;
 }
 
 #list::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--color-dark-hover);
 }
-
-
-.todo-list li:hover {
-    background-color: #f5f5f5;
-}
-
-
-.todo-app li:hover {
-    background-color: var(--color-white);
-}
-
-
-.todo-app li button {
-    background-color: transparent;
-    color: #111;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 4px 6px;
-    transition: 0.2s;
-}
-
-.todo-app li button:hover {
-    color: #ff0000;
-}
-
 
 .done {
     text-decoration: line-through;
-    color: #888;
+    color: var(--color-done);
     opacity: 0.7;
 }
