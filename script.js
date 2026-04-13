@@ -140,4 +140,67 @@ function loadTasks() {
 
 
 
+
+
+
+const allBtn = document.getElementById("allBtn")
+const activeBtn = document.getElementById("activeBtn")
+const doneBtn = document.getElementById("doneBtn")
+
+
+
+function filterTasks(type) {
+    const tasks = list.children
+
+    for (let task of tasks) {
+        if (type === "all") {
+            task.style.display = "flex"
+        }
+
+        if (type === "active") {
+            if (task.classList.contains("done")) {
+                task.style.display = "none"
+            } else {
+                task.style.display = "flex"
+            }
+        }
+
+        if (type === "done") {
+            if (task.classList.contains("done")) {
+                task.style.display = "flex"
+            } else {
+                task.style.display = "none"
+            }
+        }
+    }
+}
+
+
+allBtn.addEventListener("click", function () {
+    filterTasks("all")
+    setActiveButton(allBtn)
+})
+
+activeBtn.addEventListener("click", function () {
+    filterTasks("active")
+    setActiveButton(activeBtn)
+})
+
+doneBtn.addEventListener("click", function () {
+    filterTasks("done")
+    setActiveButton(doneBtn)
+})
+
+
+function setActiveButton(activeBtn) {
+    const buttons = document.querySelectorAll(".filters button")
+
+    for (let btn of buttons) {
+        btn.classList.remove("active")
+    }
+
+    activeBtn.classList.add("active")
+}
+
+
 loadTasks()
