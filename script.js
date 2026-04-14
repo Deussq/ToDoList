@@ -203,4 +203,22 @@ function setActiveButton(activeBtn) {
 }
 
 
+
+
+clearCompletedBtn.addEventListener("click", function () {
+
+const tasks = list.children
+
+
+    for (let task of [...tasks]) {
+        if (task.classList.contains("done")) {
+            task.remove()
+        }
+    }
+
+    updateTaskCount()
+    saveTasks()
+})
+
+
 loadTasks()
