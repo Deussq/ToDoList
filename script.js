@@ -31,14 +31,42 @@ function createTask(text, done = false) {
         saveTasks()
     })
 
-    li.addEventListener("dblclick", function () {
-        const newText = prompt("Edit task:", span.textContent)
 
-        if (!newText) return
+
+    li.addEventListener("dblclick", function () {
+    const inputEdit = document.createElement("input")
+    inputEdit.type = "text"
+    inputEdit.value = span.textContent
+
+    li.replaceChild(inputEdit, span)
+    inputEdit.focus()
+
+    inputEdit.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            finishEdit()
+        }
+    })
+
+    inputEdit.addEventListener("blur", function () {
+        finishEdit()
+    })
+
+    function finishEdit() {
+        const newText = inputEdit.value.trim()
+
+        if (newText === "") {
+            li.replaceChild(span, inputEdit)
+            return
+        }
 
         span.textContent = newText
+        li.replaceChild(span, inputEdit)
+
         saveTasks()
-    })
+    }
+})
+
+
 
     li.appendChild(span)
     li.appendChild(deleteBtn)
